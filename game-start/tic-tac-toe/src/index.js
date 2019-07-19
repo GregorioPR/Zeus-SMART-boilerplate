@@ -1,8 +1,8 @@
-let squares = [null, null, null, null, null, null, null, null, null];
-let xIsNext = true;
+ let squares = [null, null, null, null, null, null, null, null, null];
+ let xIsNext = true;
 
-/* All the possible ways to win, each element contains the indicies of squares to check */
-/* If squares[0], squares[1], squares[2] all contain the same value, that player has won, for each set of 3 numbers in the list */
+// All the possible ways to win, each element contains the indicies of squares to check
+// If squares[0], squares[1], squares[2] all contain the same value, that player has won, for each set of 3 numbers in the list */
 const winningSquaresArr = [
   [0, 1, 2],
   [3, 4, 5],
@@ -29,51 +29,77 @@ function checkWinner() {
   return false;
 }
 
-function renderBoard() {
-  $('.square').each(function(ind, elem) {
-    let index = +elem.dataset.index; // converts index to a number ('3' is different than 3 in javascript)
-    elem.innerText = squares[index];
-  });
+// function renderBoard() {
+//   $('.square').each(function(ind, elem) {
+//     let index = +elem.dataset.index; // converts index to a number ('3' is different than 3 in javascript)
+//     elem.innerText = squares[index];
+//   });
 
-  let status = $(".status");
-  let playerStatus = 'Next Player: ';
-  let winningStatus;
+//   let status = $(".status");
+//   let playerStatus = 'Next Player: ';
+//   let winningStatus;
 
-  if (xIsNext) {
-    playerStatus = playerStatus + 'X'
-  } else {
-    playerStatus = playerStatus + 'O'
-  }
+//   if (xIsNext) {
+//     playerStatus = playerStatus + 'X'
+//   } else {
+//     playerStatus = playerStatus + 'O'
+//   }
 
-  if (checkWinner()) {
-    winningStatus = 'Winner is '
-    if (xIsNext) {
-      winningStatus = winningStatus + 'O'
-    } else {
-      winningStatus = winningStatus + 'X'
-    }
-    status.text(winningStatus);
-  } else {
-    status.text(playerStatus);
-  }
-}
+//   if (checkWinner()) {
+//     winningStatus = 'Winner is '
+//     if (xIsNext) {
+//       winningStatus = winningStatus + 'O'
+//     } else {
+//       winningStatus = winningStatus + 'X'
+//     }
+//     status.text(winningStatus);
+//   } else {
+//     status.text(playerStatus);
+//   }
+// }
 
-$(document).click((event) => {
-  const target = event.target;
-  // Check if click on sqaure
+// $(document).click((event) => {
+//   const target = event.target;
+//   // Check if click on sqaure
+//   if (target.className == "square") {
+//     // Check if the square has no value
+//     let index = +target.dataset.index;
+//     if (squares[index] || checkWinner()) return;
+//     if (xIsNext) {
+//       squares[index] = 'X';
+//     } else {
+//       squares[index] = 'O';
+//     }
+//     target.innerText = squares[index];
+//     xIsNext = !xIsNext;
+//     renderBoard();
+//   }
+// });
+
+// renderBoard();
+$(document).click(function(event) { 
+  let target = event.target
+  console.log(target.className)
   if (target.className == "square") {
-    // Check if the square has no value
-    let index = +target.dataset.index;
-    if (squares[index] || checkWinner()) return;
-    if (xIsNext) {
-      squares[index] = 'X';
-    } else {
-      squares[index] = 'O';
+   let index = +target.dataset.index;
+    if(xIsNext){
+      squares[index] = "chiken"
+      target.innerText= "chiken"
+    }else{
+      squares[index] = "fries"
+      target.innerText= "fries"
     }
-    target.innerText = squares[index];
-    xIsNext = !xIsNext;
-    renderBoard();
+    xIsNext= !xIsNext
+    console.log(squares)
+    if (checkWinner()){
+      let status = $(".status")
+      if (xIsNext)
+     { 
+       status.text("winner is fries")
+      }else{
+        status.text("winner is chiken")
+      }
+      console.log("winner")
   }
-});
-
-renderBoard();
+  }
+})
